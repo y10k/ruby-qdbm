@@ -24,6 +24,11 @@
 
 #define MAXOPEN 1024
 
+#ifndef RUBY_19
+#ifndef RSTRING_LEN
+#define RSTRING_LEN(v) (RSTRING(v)->len)
+#endif
+#endif
 
 VALUE ccuriaerror;
 VALUE ccuriaerror_ENOERR;
@@ -233,7 +238,7 @@ static VALUE rbcropen(VALUE vself, VALUE vname, VALUE vomode, VALUE vbnum, VALUE
   const char *name;
   int index, omode, bnum, dnum;
   if((index = getnewindex()) == -1) myerror(DP_EMISC);
-  name = STR2CSTR(vname);
+  name = StringValuePtr(vname);
   FIXNUM_P(vomode);
   omode = FIX2INT(vomode);
   FIXNUM_P(vbnum);
@@ -276,10 +281,10 @@ static VALUE rbcrput(VALUE vself, VALUE vindex, VALUE vkey, VALUE vval, VALUE vd
   int index, ksiz, vsiz, dmode;
   FIXNUM_P(vindex);
   if((index = FIX2INT(vindex)) == -1) myerror(DP_EMISC);
-  kbuf = STR2CSTR(vkey);
-  ksiz = RSTRING(vkey)->len;
-  vbuf = STR2CSTR(vval);
-  vsiz = RSTRING(vval)->len;
+  kbuf = StringValuePtr(vkey);
+  ksiz = RSTRING_LEN(vkey);
+  vbuf = StringValuePtr(vval);
+  vsiz = RSTRING_LEN(vval);
   FIXNUM_P(vdmode);
   dmode = FIX2INT(vdmode);
   curia = crtable[index];
@@ -297,8 +302,8 @@ static VALUE rbcrout(VALUE vself, VALUE vindex, VALUE vkey){
   int index, ksiz;
   FIXNUM_P(vindex);
   if((index = FIX2INT(vindex)) == -1) myerror(DP_EMISC);
-  kbuf = STR2CSTR(vkey);
-  ksiz = RSTRING(vkey)->len;
+  kbuf = StringValuePtr(vkey);
+  ksiz = RSTRING_LEN(vkey);
   curia = crtable[index];
   if(!crout(curia, kbuf, ksiz)){
     if(crsltable[index] && dpecode == DP_ENOITEM) return Qfalse;
@@ -316,8 +321,8 @@ static VALUE rbcrget(VALUE vself, VALUE vindex, VALUE vkey, VALUE vstart, VALUE 
   VALUE vval;
   FIXNUM_P(vindex);
   if((index = FIX2INT(vindex)) == -1) myerror(DP_EMISC);
-  kbuf = STR2CSTR(vkey);
-  ksiz = RSTRING(vkey)->len;
+  kbuf = StringValuePtr(vkey);
+  ksiz = RSTRING_LEN(vkey);
   FIXNUM_P(vstart);
   start = FIX2INT(vstart);
   FIXNUM_P(vmax);
@@ -339,8 +344,8 @@ static VALUE rbcrvsiz(VALUE vself, VALUE vindex, VALUE vkey){
   int index, ksiz, vsiz;
   FIXNUM_P(vindex);
   if((index = FIX2INT(vindex)) == -1) myerror(DP_EMISC);
-  kbuf = STR2CSTR(vkey);
-  ksiz = RSTRING(vkey)->len;
+  kbuf = StringValuePtr(vkey);
+  ksiz = RSTRING_LEN(vkey);
   curia = crtable[index];
   if((vsiz = crvsiz(curia, kbuf, ksiz)) == -1){
     if(crsltable[index] && dpecode == DP_ENOITEM) return INT2FIX(-1);

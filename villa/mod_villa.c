@@ -25,6 +25,11 @@
 
 #define MAXOPEN 1024
 
+#ifndef RUBY_19
+#ifndef RSTRING_LEN
+#define RSTRING_LEN(v) (RSTRING(v)->len)
+#endif
+#endif
 
 VALUE cvillaerror;
 VALUE cvillaerror_ENOERR;
@@ -304,7 +309,7 @@ static VALUE rbvlopen(VALUE vself, VALUE vname, VALUE vomode, VALUE vcmode){
   int index, omode, cmode;
   VLCFUNC cmp;
   if((index = getnewindex()) == -1) myerror(DP_EMISC);
-  name = STR2CSTR(vname);
+  name = StringValuePtr(vname);
   FIXNUM_P(vomode);
   omode = FIX2INT(vomode);
   FIXNUM_P(vcmode);
@@ -352,10 +357,10 @@ static VALUE rbvlput(VALUE vself, VALUE vindex, VALUE vkey, VALUE vval, VALUE vd
   int index, ksiz, vsiz, dmode;
   FIXNUM_P(vindex);
   if((index = FIX2INT(vindex)) == -1) myerror(DP_EMISC);
-  kbuf = STR2CSTR(vkey);
-  ksiz = RSTRING(vkey)->len;
-  vbuf = STR2CSTR(vval);
-  vsiz = RSTRING(vval)->len;
+  kbuf = StringValuePtr(vkey);
+  ksiz = RSTRING_LEN(vkey);
+  vbuf = StringValuePtr(vval);
+  vsiz = RSTRING_LEN(vval);
   FIXNUM_P(vdmode);
   dmode = FIX2INT(vdmode);
   villa = vltable[index];
@@ -373,8 +378,8 @@ static VALUE rbvlout(VALUE vself, VALUE vindex, VALUE vkey){
   int index, ksiz;
   FIXNUM_P(vindex);
   if((index = FIX2INT(vindex)) == -1) myerror(DP_EMISC);
-  kbuf = STR2CSTR(vkey);
-  ksiz = RSTRING(vkey)->len;
+  kbuf = StringValuePtr(vkey);
+  ksiz = RSTRING_LEN(vkey);
   villa = vltable[index];
   if(!vlout(villa, kbuf, ksiz)){
     if(vlsltable[index] && dpecode == DP_ENOITEM) return Qfalse;
@@ -391,8 +396,8 @@ static VALUE rbvlget(VALUE vself, VALUE vindex, VALUE vkey){
   VALUE vval;
   FIXNUM_P(vindex);
   if((index = FIX2INT(vindex)) == -1) myerror(DP_EMISC);
-  kbuf = STR2CSTR(vkey);
-  ksiz = RSTRING(vkey)->len;
+  kbuf = StringValuePtr(vkey);
+  ksiz = RSTRING_LEN(vkey);
   villa = vltable[index];
   if(!(vbuf = vlget(villa, kbuf, ksiz, &vsiz))){
     if(vlsltable[index] && dpecode == DP_ENOITEM) return Qnil;
@@ -409,8 +414,8 @@ static VALUE rbvlvsiz(VALUE vself, VALUE vindex, VALUE vkey){
   int index, ksiz, vsiz;
   FIXNUM_P(vindex);
   if((index = FIX2INT(vindex)) == -1) myerror(DP_EMISC);
-  kbuf = STR2CSTR(vkey);
-  ksiz = RSTRING(vkey)->len;
+  kbuf = StringValuePtr(vkey);
+  ksiz = RSTRING_LEN(vkey);
   villa = vltable[index];
   if((vsiz = vlvsiz(villa, kbuf, ksiz)) == -1){
     if(vlsltable[index] && dpecode == DP_ENOITEM) return INT2FIX(-1);
@@ -426,8 +431,8 @@ static VALUE rbvlvnum(VALUE vself, VALUE vindex, VALUE vkey){
   int index, ksiz, vnum;
   FIXNUM_P(vindex);
   if((index = FIX2INT(vindex)) == -1) myerror(DP_EMISC);
-  kbuf = STR2CSTR(vkey);
-  ksiz = RSTRING(vkey)->len;
+  kbuf = StringValuePtr(vkey);
+  ksiz = RSTRING_LEN(vkey);
   villa = vltable[index];
   vnum = vlvnum(villa, kbuf, ksiz);
   return INT2FIX(vnum);
@@ -497,8 +502,8 @@ static VALUE rbvlcurjump(VALUE vself, VALUE vindex, VALUE vkey, VALUE vjmode){
   VALUE vval;
   FIXNUM_P(vindex);
   if((index = FIX2INT(vindex)) == -1) myerror(DP_EMISC);
-  kbuf = STR2CSTR(vkey);
-  ksiz = RSTRING(vkey)->len;
+  kbuf = StringValuePtr(vkey);
+  ksiz = RSTRING_LEN(vkey);
   FIXNUM_P(vjmode);
   jmode = FIX2INT(vjmode);
   villa = vltable[index];
@@ -551,8 +556,8 @@ static VALUE rbvlcurput(VALUE vself, VALUE vindex, VALUE vval, VALUE vcpmode){
   int index, vsiz, cpmode;
   FIXNUM_P(vindex);
   if((index = FIX2INT(vindex)) == -1) myerror(DP_EMISC);
-  vbuf = STR2CSTR(vval);
-  vsiz = RSTRING(vval)->len;
+  vbuf = StringValuePtr(vval);
+  vsiz = RSTRING_LEN(vval);
   FIXNUM_P(vcpmode);
   cpmode = FIX2INT(vcpmode);
   villa = vltable[index];

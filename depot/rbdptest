@@ -21,7 +21,7 @@ require 'depot'
 
 # main routine
 def main()
-  $0.gsub!(/.*\//, "")
+  $0 = $0.gsub(/.*\//, "")
   (ARGV.length >= 1) || usage()
   if(ARGV[0] == "write")
     rv = runwrite()
@@ -278,7 +278,7 @@ end
 
 
 # execute main
-$0.gsub!(/.*\//, "")
+$0 = $0.gsub(/.*\//, "")
 exit(main())
 
 
