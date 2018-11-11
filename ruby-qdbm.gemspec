@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["toki@freedom.ne.jp"]
 
   spec.summary       = %q{QDBM ruby extension libraries (depot/curia/villa)}
-  spec.description   = %q{(1) debian patch is applied to latest version of ruby. (2) repack to rubygems.}
+  spec.description   = %q{(1) The Debian patch is applied for the latest version of ruby. (2) Repacked to rubygems.}
   spec.homepage      = "https://fallabs.com/qdbm/"
   spec.license       = "LGPL-2.1-only"
 
