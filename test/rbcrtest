@@ -205,7 +205,7 @@ def domisc(name)
   begin
     # open the database
     printf("Creating a database ... ")
-    curia = Curia::open("casket", Curia::OWRITER | Curia::OCREAT | Curia::OTRUNC,
+    curia = Curia::open(name, Curia::OWRITER | Curia::OCREAT | Curia::OTRUNC,
                         bucketnum, divnum)
     printf("ok\n")
     # store records
@@ -254,7 +254,7 @@ def domisc(name)
   end
   # test iterator and threads
   printf("Processing with iterator and threads ... ")
-  Curia::new("casket", Curia::OWRITER) do |curia|
+  Curia::new(name, Curia::OWRITER) do |curia|
     (curia.rnum() == loopnum) || raise("record number is invalid")
     curia.clear()
     threads = []

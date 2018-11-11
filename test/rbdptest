@@ -201,7 +201,7 @@ def domisc(name)
   begin
     # open the database
     printf("Creating a database ... ")
-    depot = Depot::open("casket", Depot::OWRITER | Depot::OCREAT | Depot::OTRUNC, bucketnum)
+    depot = Depot::open(name, Depot::OWRITER | Depot::OCREAT | Depot::OTRUNC, bucketnum)
     printf("ok\n")
     # store records
     printf("Storing records ... ")
@@ -249,7 +249,7 @@ def domisc(name)
   end
   # test iterator and threads
   printf("Processing with iterator and threads ... ")
-  Depot::new("casket", Depot::OWRITER) do |depot|
+  Depot::new(name, Depot::OWRITER) do |depot|
     (depot.rnum() == loopnum) || raise("record number is invalid")
     depot.clear()
     threads = []

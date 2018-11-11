@@ -197,7 +197,7 @@ def domisc(name)
   begin
     # open the database
     printf("Creating a database ... ")
-    villa = Villa::open("casket", Villa::OWRITER | Villa::OCREAT | Villa::OTRUNC)
+    villa = Villa::open(name, Villa::OWRITER | Villa::OCREAT | Villa::OTRUNC)
     printf("ok\n")
     # store records
     printf("Storing records ... ")
@@ -245,7 +245,7 @@ def domisc(name)
   end
   # test iterator and threads
   printf("Processing with iterator, threads and transactions ... ")
-  Villa::new("casket", Villa::OWRITER) do |villa|
+  Villa::new(name, Villa::OWRITER) do |villa|
     (villa.rnum() == loopnum) || raise("record number is invalid")
     villa.clear()
     threads = []
