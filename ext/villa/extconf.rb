@@ -3,9 +3,9 @@ require 'mkmf'
 dir_config("villa")
 
 home = ENV['HOME']
-$CFLAGS = "-I. -I../.. -I#{home}/include -I/usr/local/include"
-$LDFLAGS = "-L../.. -L#{home}/lib -L/usr/local/lib"
-$LIBS = "-L../.. -L#{home}/lib -L/usr/local/lib"
+$CFLAGS = "-I. -I#{home}/include -I/usr/local/include " + `pkg-config qdbm --cflags`.chomp
+$LDFLAGS = "-L#{home}/lib -L/usr/local/lib " + `pkg-config qdbm --libs`.chomp
+$LIBS = "-L#{home}/lib -L/usr/local/lib " + `pkg-config qdbm --libs`.chomp
 
 have_library("c", "main")
 have_library("pthread", "main")
