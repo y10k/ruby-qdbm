@@ -4,6 +4,8 @@ require "bundler/gem_tasks"
 require 'rake/clean'
 require 'rake/extensiontask'
 
+task :default => :compile
+
 Rake::ExtensionTask.new do |task|
   task.name = 'mod_depot'
   task.ext_dir = 'ext/depot'
