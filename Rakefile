@@ -51,6 +51,14 @@ QDBMTestTask.new('rbdp', '10000', '1000')
 QDBMTestTask.new('rbcr', '10000', '1000', '10')
 QDBMTestTask.new('rbvl', '10000')
 
+desc 'Build README.html from markdown source.'
+task :readme => %w[ README.html ]
+
+file 'README.html' => [ 'README.md' ] do
+  sh "pandoc --from=markdown --to=html5 --standalone --self-contained --css=$HOME/.pandoc/github.css --output=README.html README.md"
+end
+CLOBBER.include 'README.html'
+
 # Local Variables:
 # mode: Ruby
 # indent-tabs-mode: nil
