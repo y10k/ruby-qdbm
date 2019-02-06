@@ -13,12 +13,16 @@ The modifications from original are as follows.
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'ruby-qdbm', git: 'https://github.com/y10k/ruby-qdbm.git'
+gem 'ruby-qdbm'
 ```
 
 And then execute:
 
-    $ bundle --path=vendor
+    $ bundle
+
+Or install it yourself as:
+
+    $ gem install ruby-qdbm
 
 ## Usage
 
