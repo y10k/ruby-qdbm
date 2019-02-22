@@ -11,7 +11,7 @@ Gem::Specification.new do |spec|
 
   spec.summary       = %q{QDBM ruby extension libraries (depot/curia/villa)}
   spec.description   = <<-'EOF'
-    QDBM ruby extension libraries (depot/curia/villa).
+    QDBM is Quick Database Manager of https://fallabs.com/qdbm/.
     This gem provides QDBM ruby extension libraries (depot/curia/villa).
     The modifications from original are as follows.
     1. The Debian patch is applied for the latest version of ruby.
