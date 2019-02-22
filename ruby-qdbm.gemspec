@@ -11,7 +11,7 @@ Gem::Specification.new do |spec|
 
   spec.summary       = %q{QDBM ruby extension libraries (depot/curia/villa)}
   spec.description   = %q{(1) The Debian patch is applied for the latest version of ruby. (2) Repacked to rubygems.}
-  spec.homepage      = "https://fallabs.com/qdbm/"
+  spec.homepage      = "https://github.com/y10k/ruby-qdbm"
   spec.license       = "LGPL-2.1-only"
 
   spec.extensions    = %w[ ext/depot/extconf.rb ext/curia/extconf.rb ext/villa/extconf.rb ]
