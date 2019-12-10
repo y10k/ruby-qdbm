@@ -6,7 +6,11 @@
 /pkg/
 /spec/reports/
 /tmp/
+/test/rbdpcasket
+/test/rbcrcasket
+/test/rbvlcasket
 /vendor/
+/Gemfile.lock
 *~
 *.o
 *.so
